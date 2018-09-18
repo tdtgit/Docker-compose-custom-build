@@ -14,5 +14,5 @@ ADD ./web/scripts /scripts
 RUN chmod +x /scripts/*.sh
 COPY .env /.env
 
-ENTRYPOINT [ "/bin/bash", "-c", "/scripts/init.sh" ]
+ENTRYPOINT [ "/scripts/init.sh" ]
 EXPOSE 80

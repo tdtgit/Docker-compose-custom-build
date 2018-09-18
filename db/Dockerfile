@@ -22,7 +22,5 @@ RUN chmod +x /scripts/*.sh
 
 COPY .env /.env
     
-VOLUME dbdata
-
-ENTRYPOINT [ "/bin/bash", "-c", "/scripts/init.sh" ]
+ENTRYPOINT [ "/scripts/init.sh" ]
 EXPOSE 3306

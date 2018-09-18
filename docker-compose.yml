@@ -1,34 +1,25 @@
 version: "2.3"
 services:
     db:
+      container_name: database-server
       build:
         context: .
         dockerfile: ./db/Dockerfile
       volumes:
-       - dbdata:/var/lib/mysql
-      tty: true
+       #auto create dbdata
+       - dbnew:/var/lib/mysql
     web:
-      scale: 3
+      container_name: web-server
+      # scale: 3
       # volumes:
       #   - /root/src:/var/www/html
+      ports:
+        - 80:80
       build:
         context: .
         dockerfile: ./web/Dockerfile
-      links:
-       - db
       depends_on:
-       - proxy
        - db
-      environment:
-       - VIRTUAL_HOST=${VIRTUAL_HOST}
-      tty: true
-    proxy:
-      image: jwilder/nginx-proxy
-      ports:
-       - "80:80"
-      volumes:
-       - /var/run/docker.sock:/tmp/docker.sock:ro
-      privileged: true
-volumes:
-  dbdata:
 
+volumes:
+  dbnew:
