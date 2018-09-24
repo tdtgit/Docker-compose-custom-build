@@ -1,23 +1,15 @@
-version: "2.3"
+version: "3"
 services:
     db:
-      container_name: database-server
-      build:
-        context: .
-        dockerfile: ./db/Dockerfile
+      image: dbserver
       volumes:
-       #auto create dbdata
-       - dbnew:/var/lib/mysql
+        - dbnew:/var/lib/mysql
     web:
-      container_name: web-server
-      # scale: 3
+      image: webserver
       # volumes:
       #   - /root/src:/var/www/html
       ports:
         - 80:80
-      build:
-        context: .
-        dockerfile: ./web/Dockerfile
       depends_on:
        - db
 

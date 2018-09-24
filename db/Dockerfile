@@ -17,7 +17,7 @@ RUN yum clean all && \
     yum clean metadata && \
     rm -rf /var/cache/yum
 
-ADD ./db/scripts /scripts
+ADD scripts /scripts
 RUN chmod +x /scripts/*.sh
 
 COPY .env /.env
