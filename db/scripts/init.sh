@@ -18,7 +18,7 @@ setcap -r /usr/sbin/mysqld # https://bugs.mysql.com/bug.php?id=91395
 
 function start(){
     mysqld_pre_systemd
-    mysqld --datadir=/var/lib/mysql --socket=/var/lib/mysql/mysql.sock --user=root
+    mysqld --datadir=/var/lib/mysql --socket=/var/lib/mysql/mysql.sock --user=root -D
 }
 
 if [ -d "/var/lib/mysql" ] && [ "$( ls -A "/var/lib/mysql" )" ]; then
@@ -45,4 +45,8 @@ else
     # Grant privileges
     mysql -uroot -p$ROOTPASS -e "GRANT ALL PRIVILEGES ON $DBNAME.* TO '$USER'@'%'" && \
     mysql -uroot -p$ROOTPASS -e "flush privileges;"
+
+    # Shutdown MySQL to go to background mode
+    mysqladmin -u root -p$ROOTPASS shutdown
+    mysqld --datadir=/var/lib/mysql --socket=/var/lib/mysql/mysql.sock --user=root
 fi
